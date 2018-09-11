@@ -33,40 +33,48 @@ config.amazonaws =
 
 module.exports = config;
 */
-var jobs = awsIot.jobs(config.amazonaws);
+const deviceModule = require('aws-iot-device-sdk').device;
 
 //
 // Device is an instance returned by mqtt.Client(), see mqtt.js for full
 // documentation.
 //
-jobs
+module.exports = {
+  processData: function (args) {
+
+const device = deviceModule(config.amazonaws);
+
+device
   .on('connect', function() {
     console.log('connect');
-    // jobs.subscribe('topic_1');
-    jobs.publish('speedtest', JSON.stringify({ test_data: 1}));    
+    // device.subscribe('topic_1');
+    device.publish('speedtest', JSON.stringify(args));
   });
 
-jobs
+device
   .on('message', function(topic, payload) {
     console.log('message', topic, payload.toString());
   });
 
-jobs
+device
   .on('error', function(error) {
     console.log('error', error);
   });
 
-jobs
+device
   .on('reconnect', function() {
     console.log('reconnect');
   });
 
-jobs
+device
   .on('close', function() {
       console.log('close');  
   });
 
-jobs
+device
   .on('message', function(topic, payload) {
       console.log('message', topic, payload.toString());
    });
+
+   }
+   }
