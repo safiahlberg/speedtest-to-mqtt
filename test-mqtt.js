@@ -1,3 +1,5 @@
+var config = require('./config');
+
 var awsIot = require('aws-iot-device-sdk');
 
 //
@@ -7,49 +9,64 @@ var awsIot = require('aws-iot-device-sdk');
 // to connect with a client identifier which is already in use, the existing 
 // connection will be terminated.
 //
-var device = awsIot.device({
-   keyPath: 'keys/f45d538c35-private.pem.key',
-  certPath: 'keys/f45d538c35-certificate.pem.crt',
-    caPath: 'keys/verisign-CA.pem',
-    region: 'eu-central-1',
-  clientId: 'raspi1',
- thingName: 'raspi1',
-      host: 'aynb80k008y2w.iot.eu-central-1.amazonaws.com',
-     debug: true
+/*
+var jobs = awsIot.jobs({
+   keyPath: <YourPrivateKeyPath>,
+  certPath: <YourCertificatePath>,
+    caPath: <YourRootCACertificatePath>,
+  clientId: <YourUniqueClientIdentifier>,
+      host: <YourCustomEndpoint>
 });
+
+or in a file config.js as such:
+
+var config = {};
+
+config.amazonaws =
+    {
+       keyPath: <YourPrivateKeyPath>,
+      certPath: <YourCertificatePath>,
+        caPath: <YourRootCACertificatePath>,
+      clientId: <YourUniqueClientIdentifier>,
+          host: <YourCustomEndpoint>
+    };
+
+module.exports = config;
+*/
+var jobs = awsIot.jobs(config.amazonaws);
 
 //
 // Device is an instance returned by mqtt.Client(), see mqtt.js for full
 // documentation.
 //
-device
+jobs
   .on('connect', function() {
     console.log('connect');
-    // device.subscribe('topic_1');
-    device.publish('speedtest', JSON.stringify({ test_data: 1}));
+    // jobs.subscribe('topic_1');
+    jobs.publish('speedtest', JSON.stringify({ test_data: 1}));    
   });
 
-device
+jobs
   .on('message', function(topic, payload) {
     console.log('message', topic, payload.toString());
   });
 
-device
+jobs
   .on('error', function(error) {
     console.log('error', error);
   });
 
-device
+jobs
   .on('reconnect', function() {
     console.log('reconnect');
   });
 
-device
+jobs
   .on('close', function() {
       console.log('close');  
   });
 
-device
+jobs
   .on('message', function(topic, payload) {
       console.log('message', topic, payload.toString());
    });

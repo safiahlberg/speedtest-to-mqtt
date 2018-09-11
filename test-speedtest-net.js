@@ -1,5 +1,7 @@
+var config = require('./config');
+
 var speedTest = require('speedtest-net');
-var test = speedTest({maxTime: 5000});
+var test = speedTest(config.speedtestNet);
 
 test.on('data', data => {
   console.dir(data);
