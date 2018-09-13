@@ -6,7 +6,7 @@ var test = speedTest(config.speedtestNet);
 var aws = require('./aws-iot-mqtt-wrapper');
 
 test.on('data', data => {
-  console.dir(data);
+  console.log('Speedtest performed');
   aws.processData(data);
 });
 
