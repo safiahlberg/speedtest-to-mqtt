@@ -39,44 +39,41 @@ module.exports = config;
 // documentation.
 //
 
-var processData = function(args) {
+var processData = function(data) {
 
-const jobs = awsIot.device(config.amazonaws);
+    const jobs = awsIot.device(config.amazonaws);
 
-jobs
-  .on('connect', function() {
-    // console.log('Data: %s', JSON.stringify(args));
-    console.log('AWS IOT connect');
-    jobs.publish('speedtest', JSON.stringify(args));
-    jobs.end();
-  });
+    jobs
+      .on('connect', function() {
+        // console.log('Data: %s', JSON.stringify(args));
+        console.log('AWS IOT connect');
+        jobs.publish('speedtest', JSON.stringify(data), function(err) {
+            jobs.end();
+        });
+      });
 
-jobs
-  .on('message', function(topic, payload) {
-    console.log('message', topic, payload.toString());
-  });
+    jobs
+      .on('message', function(topic, payload) {
+        console.log('message', topic, payload.toString());
+      });
 
-jobs
-  .on('error', function(error) {
-    console.log('error', error);
-  });
+    jobs
+      .on('error', function(error) {
+        console.log('error', error);
+      });
 
-jobs
-  .on('reconnect', function() {
-    console.log('reconnect');
-  });
+    jobs
+      .on('reconnect', function() {
+        console.log('reconnect');
+      });
 
-jobs
-  .on('close', function() {
-      console.log('close');  
-  });
-
-jobs
-  .on('message', function(topic, payload) {
-      console.log('message', topic, payload.toString());
-   });
+    jobs
+      .on('close', function() {
+          console.log('close');
+      });
 
 };
+
 
 module.exports.processData = processData;
 
