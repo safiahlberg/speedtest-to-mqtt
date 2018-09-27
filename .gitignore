@@ -6,3 +6,4 @@ keys
 *.iml
 config.js
 *.DS_Store
+config.properties
