@@ -48,6 +48,7 @@ var processData = function(data) {
         // console.log('Data: %s', JSON.stringify(args));
         console.log('AWS IOT connect');
         jobs.publish('speedtest', JSON.stringify(data), function(err) {
+            console.log('error', err);
             jobs.end();
         });
       });
