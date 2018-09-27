@@ -5,3 +5,4 @@ keys
 .idea
 *.iml
 config.js
+*.DS_Store
