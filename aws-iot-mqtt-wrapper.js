@@ -48,7 +48,7 @@ var processData = function(data) {
         // console.log('Data: %s', JSON.stringify(args));
         console.log('AWS IOT connect');
         jobs.publish('speedtest', JSON.stringify(data), function(err) {
-            console.log('error', err);
+            // console.log('error', err);
             jobs.end();
         });
       });
@@ -79,5 +79,6 @@ var processData = function(data) {
 module.exports.processData = processData;
 
 if (require.main === module) {
-   processData({test : 'aws-iot-mqtt-wrapper'});
+   processData({timestamp : + new Date(),
+    test : 'aws-iot-mqtt-wrapper'});
 }
