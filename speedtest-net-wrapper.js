@@ -9,9 +9,10 @@ var aws = require('./aws-iot-mqtt-wrapper');
 
 test.on('data', data => {
     data.timestamp = +new Date();
-    // console.log('Speedtest performed: ' + JSON.stringify(data));
-    // console.log('Speedtest performed');
-    log.info('Speedtest performed at: ', new Date(parseInt(data.timestamp)).toJSON());
+    log.info(
+        'Speedtest performed. Download: ', data.speeds.download,
+        ', Upload: ', data.speeds.upload,
+        ' Ping: ', data.server.ping);
     aws.processData(data);
 });
 
