@@ -7,3 +7,4 @@ keys
 config.js
 *.DS_Store
 config.properties
+*.log
