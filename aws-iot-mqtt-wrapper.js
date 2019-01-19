@@ -47,8 +47,6 @@ var processData = function(data) {
 
     jobs
         .on('connect', function() {
-            // console.log('Data: %s', JSON.stringify(args));
-            // console.log('AWS IOT connect');
             log.info('AWS IOT connect.');
             jobs.publish('speedtest', JSON.stringify(data), function(err) {
                 // console.log('error', err);
@@ -58,25 +56,21 @@ var processData = function(data) {
 
     jobs
         .on('message', function(topic, payload) {
-            // console.log('message', topic, payload.toString());
             log.info('message', topic, payload.toString());
         });
 
     jobs
         .on('error', function(error) {
-            // console.log('error', error);
             log.error('error', error);
         });
 
     jobs
         .on('reconnect', function() {
-            // console.log('reconnect');
             log.info('reconnect');
         });
 
     jobs
         .on('close', function() {
-            // console.log('close');
             log.info('close')
         });
 

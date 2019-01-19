@@ -16,6 +16,5 @@ test.on('data', data => {
 });
 
 test.on('error', err => {
-    // console.error(err);
     log.error(err);
 });
