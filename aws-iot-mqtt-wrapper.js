@@ -1,3 +1,5 @@
+const log = require('simple-node-logger').createSimpleLogger();
+
 var config = require('./config');
 
 var awsIot = require('aws-iot-device-sdk');
@@ -44,34 +46,39 @@ var processData = function(data) {
     const jobs = awsIot.device(config.amazonaws);
 
     jobs
-      .on('connect', function() {
-        // console.log('Data: %s', JSON.stringify(args));
-        console.log('AWS IOT connect');
-        jobs.publish('speedtest', JSON.stringify(data), function(err) {
-            // console.log('error', err);
-            jobs.end();
+        .on('connect', function() {
+            // console.log('Data: %s', JSON.stringify(args));
+            // console.log('AWS IOT connect');
+            log.info('AWS IOT connect.');
+            jobs.publish('speedtest', JSON.stringify(data), function(err) {
+                // console.log('error', err);
+                jobs.end();
+            });
         });
-      });
 
     jobs
-      .on('message', function(topic, payload) {
-        console.log('message', topic, payload.toString());
-      });
+        .on('message', function(topic, payload) {
+            // console.log('message', topic, payload.toString());
+            log.info('message', topic, payload.toString());
+        });
 
     jobs
-      .on('error', function(error) {
-        console.log('error', error);
-      });
+        .on('error', function(error) {
+            // console.log('error', error);
+            log.error('error', error);
+        });
 
     jobs
-      .on('reconnect', function() {
-        console.log('reconnect');
-      });
+        .on('reconnect', function() {
+            // console.log('reconnect');
+            log.info('reconnect');
+        });
 
     jobs
-      .on('close', function() {
-          console.log('close');
-      });
+        .on('close', function() {
+            // console.log('close');
+            log.info('close')
+        });
 
 };
 
@@ -79,6 +86,8 @@ var processData = function(data) {
 module.exports.processData = processData;
 
 if (require.main === module) {
-   processData({timestamp : + new Date(),
-    test : 'aws-iot-mqtt-wrapper'});
+    processData({
+        timestamp: +new Date(),
+        test: 'aws-iot-mqtt-wrapper'
+    });
 }
