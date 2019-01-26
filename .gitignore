@@ -8,3 +8,4 @@ config.js
 *.DS_Store
 config.properties
 *.log
+node_modules

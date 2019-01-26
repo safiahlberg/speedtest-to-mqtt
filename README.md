@@ -1,6 +1,11 @@
 # speedtest-to-mqtt
 A small project that posts data from speedtest to AWS via MQTT
 
+You need to have node installed.
+You need to install simple-node-logger https://www.npmjs.com/package/simple-node-logger
+You need to install speedtest-net https://www.npmjs.com/package/speedtest-net
+You need to install aws-iot-device-skd-js https://github.com/aws/aws-iot-device-sdk-js
+
 Crontab example
 */10 * * * *	sh /home/pi/speedtest-to-mqtt/run.sh
 
